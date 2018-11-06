@@ -5,55 +5,55 @@
 -- SCHOOLS Table Definition 
 CREATE TABLE SCHOOLS 
 (
-  ID 		INTEGER 	NOT NULL AUTO_INCREMENT,	-- Auto_increment if not specified
+  ID 		    INTEGER 	  NOT NULL AUTO_INCREMENT,	-- Auto_increment if not specified
   SchName 	VARCHAR(32) NOT NULL,
-  RANKING 	INTEGER 	NOT NULL,					-- State Rank
+  Ranking 	INTEGER   	NOT NULL,					-- State Rank
   PRIMARY KEY (ID) 
 );
 
 -- STUDENTS Table Definition
 CREATE TABLE STUDENTS (
-  ID 		INTEGER 	NOT NULL AUTO_INCREMENT,	-- Auto_increment if not specified
-  SchoolID 	INTEGER 	NOT NULL,
+  ID 		    INTEGER 	  NOT NULL AUTO_INCREMENT,	-- Auto_increment if not specified
+  SchoolID 	INTEGER 	  NOT NULL,
   StuName 	VARCHAR(32) NOT NULL,
-  GradDate	DATE		NOT NULL,					-- Formatt YYYY-MM-DD
-  PastExp 	INTEGER 	NOT NULL DEFAULT 0,			-- # of years
+  GradDate	DATE		    NOT NULL,					-- Formatt YYYY-MM-DD
+  PastExp 	INTEGER 	  NOT NULL DEFAULT 0,			-- # of years
   PRIMARY KEY(ID),
-  FOREIGN KEY (SchoolID) REFERENCES SCHOOLS (ID)
+  FOREIGN KEY (SchoolID) REFERENCES SCHOOLS (ID) ON UPDATE CASCADE -- FOREIGN
 );
 
 -- COMPANY Table Definition
 CREATE TABLE COMPANY (
-  ID 	INTEGER 	NOT NULL AUTO_INCREMENT,		-- Auto_increment if not specified
+  ID 	  INTEGER 	  NOT NULL AUTO_INCREMENT,		-- Auto_increment if not specified
   CName VARCHAR(32) NOT NULL,
-  PRIMARY KEY(ID) 
+  PRIMARY KEY(ID)
 );
 
 -- JOBS Table Definition
 CREATE TABLE JOBS (
-  ID 			INTEGER 	NOT NULL AUTO_INCREMENT,-- Auto_increment if not specified
-  CID 			INTEGER 	NOT NULL,
-  JName 		VARCHAR(32) NOT NULL,		
-  AppDueDate 	DATE	NOT NULL,					-- Format YYYY-MM-DD
-  StartDate		DATE	NOT NULL,					-- Format YYYY-MM-DD
-  PastExp 		INTEGER 	NOT NULL,
-  Pay	 		REAL 	NOT NULL,
+  ID 			    INTEGER 	  NOT NULL AUTO_INCREMENT,-- Auto_increment if not specified
+  CID 			  INTEGER 	  NOT NULL,
+  JobTitle 		VARCHAR(32) NOT NULL,		
+  AppDueDate 	DATE	      NOT NULL,					-- Format YYYY-MM-DD
+  StartDate		DATE	      NOT NULL,					-- Format YYYY-MM-DD
+  PastExp 		INTEGER 	  NOT NULL DEFAULT 0, -- 0 if not specified
+  Pay	 	    	REAL 	      NOT NULL CHECK (Pay >= 0),
   PRIMARY KEY (ID),
-  FOREIGN KEY (CID) REFERENCES COMPANY (ID) 
+  FOREIGN KEY (CID) REFERENCES COMPANY (ID) ON UPDATE CASCADE -- FOREIGN
 );
 
 -- INTERNSHIPS Table Definition
 CREATE TABLE INTERNSHIPS(
-  ID			INTEGER		NOT NULL AUTO_INCREMENT,-- Auto_increment if not specified
-  CID			INTEGER 	NOT NULL,
+  ID			    INTEGER		  NOT NULL AUTO_INCREMENT,-- Auto_increment if not specified
+  CID			    INTEGER 	  NOT NULL,
   JobTitle		VARCHAR(32) NOT NULL,
-  AppDueDate	DATE		NOT NULL,
-  IntLength		INTEGER 	NOT NULL,				-- Number of Months
-  StartDate		DATE 		NOT NULL,
-  PastExp 		INTEGER 	NOT NULL,
-  Pay 			REAL 		NOT NULL,
+  AppDueDate	DATE		    NOT NULL,
+  IntLength		INTEGER 	  NOT NULL,				-- Number of Months
+  StartDate		DATE 		    NOT NULL,
+  PastExp 		INTEGER 	  NOT NULL DEFAULT 0,
+  Pay 			  REAL 		    NOT NULL DEFAULT 0, -- If not specified we can assume it is unpaid
   PRIMARY KEY (ID),
-  FOREIGN KEY (CID) REFERENCES COMPANY (ID) 
+  FOREIGN KEY (CID) REFERENCES COMPANY (ID) ON UPDATE CASCADE -- FOREIGN
 );
 
 -- SCHOOLS Initial State
@@ -63,7 +63,7 @@ INSERT INTO SCHOOLS VALUES(111,	'University of Washington S',		2	);
 INSERT INTO SCHOOLS VALUES(115,	'Western Washington University',	3	);			-- AUTO_INCREMENT
 INSERT INTO SCHOOLS VALUES(134,	'Seattle University',				5	);
 INSERT INTO SCHOOLS VALUES(123,	'University of Puget Sound',		6	);
-INSERT INTO SCHOOLS VALUES(125,	'Saint Martin\'s University',		9	);
+INSERT INTO SCHOOLS VALUES(125,	"Saint Martin's University",		9	);
 
 -- STUDENTS Initial State
 /*							ID		SID		NAME				GradDate	exp	*/
