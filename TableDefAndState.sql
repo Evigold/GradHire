@@ -17,7 +17,7 @@ CREATE TABLE STUDENTS (
   SchoolID 	INTEGER 	  NOT NULL,
   StuName 	VARCHAR(32) NOT NULL,
   GradDate	DATE		    NOT NULL,					-- Formatt YYYY-MM-DD
-  PastExp 	INTEGER 	  NOT NULL DEFAULT 0,			-- # of years
+  PastExp 	INTEGER 	  NOT NULL DEFAULT 0 CHECK (PastExp >= 0),			-- # of years
   PRIMARY KEY(ID),
   FOREIGN KEY (SchoolID) REFERENCES SCHOOLS (ID) ON UPDATE CASCADE -- FOREIGN
 );
@@ -36,7 +36,7 @@ CREATE TABLE JOBS (
   JobTitle 		VARCHAR(32) NOT NULL,		
   AppDueDate 	DATE	      NOT NULL,					-- Format YYYY-MM-DD
   StartDate		DATE	      NOT NULL,					-- Format YYYY-MM-DD
-  PastExp 		INTEGER 	  NOT NULL DEFAULT 0, -- 0 if not specified
+  PastExp 		INTEGER 	  NOT NULL DEFAULT 0 CHECK (PastExp >= 0), -- 0 if not specified
   Pay	 	    	REAL 	      NOT NULL CHECK (Pay >= 0),
   PRIMARY KEY (ID),
   FOREIGN KEY (CID) REFERENCES COMPANY (ID) ON UPDATE CASCADE -- FOREIGN
@@ -50,8 +50,8 @@ CREATE TABLE INTERNSHIPS(
   AppDueDate	DATE		    NOT NULL,
   IntLength		INTEGER 	  NOT NULL,				-- Number of Months
   StartDate		DATE 		    NOT NULL,
-  PastExp 		INTEGER 	  NOT NULL DEFAULT 0,
-  Pay 			  REAL 		    NOT NULL DEFAULT 0, -- If not specified we can assume it is unpaid
+  PastExp 		INTEGER 	  NOT NULL DEFAULT 0 CHECK (PastExp >= 0),
+  Pay 			  REAL 		    NOT NULL DEFAULT 0 CHECK (Pay >= 0), -- If not specified we can assume it is unpaid
   PRIMARY KEY (ID),
   FOREIGN KEY (CID) REFERENCES COMPANY (ID) ON UPDATE CASCADE -- FOREIGN
 );
