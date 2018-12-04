@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GradHire", "GradHire\", "{583DB97A-5269-4AC9-9C3F-C6CBDE30A131}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_53012"
+		Debug.AspNetCompiler.PhysicalPath = "GradHire\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53012\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_53012"
+		Release.AspNetCompiler.PhysicalPath = "GradHire\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53012\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "53012"
+		SlnRelativePath = "GradHire\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{583DB97A-5269-4AC9-9C3F-C6CBDE30A131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{583DB97A-5269-4AC9-9C3F-C6CBDE30A131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05AA1AD5-0C05-4B06-B6F9-C3FD1490F12B}
+	EndGlobalSection
+EndGlobal
