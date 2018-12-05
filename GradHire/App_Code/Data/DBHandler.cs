@@ -48,7 +48,11 @@ public class DBHandler
         return keywords;
     }
 
-
+    public SqlDataReader runQuery(string query) {
+        command = new SqlCommand(query, connection);
+        reader = command.ExecuteReader();
+        return reader;
+    }
 
     public SqlDataReader runQuery()
     {

@@ -99,15 +99,16 @@ public partial class home : System.Web.UI.Page {
             System.Diagnostics.Debug.WriteLine(queryGenerator.JobKeyword + "      " + queryGenerator.CompanyKeyword);
         }
 
-        handler.Query = queryGenerator.generate();
-        Response.Redirect("~/Listing.aspx");
-        
-        //SqlDataReader reader = handler.runQuery(query);
-        //DisplayJobs.DataSource = reader;
-        //DisplayJobs.DataBind();
-        //reader.Close();
+        //handler.Query = queryGenerator.generate();
+        //Response.Redirect("~/Listing.aspx");
 
-     
+        query = queryGenerator.generate();
+        SqlDataReader reader = handler.runQuery(query);
+        DisplayJobs.DataSource = reader;
+        DisplayJobs.DataBind();
+        reader.Close();
+
+
     }
     
     private void printDebug(List<string> words) {
