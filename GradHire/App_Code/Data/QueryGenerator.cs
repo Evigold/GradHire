@@ -8,6 +8,8 @@ using System.Web;
  */
 public class QueryGenerator {
 
+    private DBHandler handler;
+
     private bool companyFlag = false;
     private bool jobFlag = false;
     private bool internFlag = false;
@@ -31,21 +33,106 @@ public class QueryGenerator {
      * Empty class constructor
      */
     public QueryGenerator() {
-
+        handler = new DBHandler();
     }
 
     //class properties
     //Job, Company, and Intern flags are true if keywords entered
-    public bool JobFlag { get => jobFlag; set => jobFlag = value; }
-    public bool CompanyFlag { get => companyFlag; set => companyFlag = value; }
-    public bool InternFlag { get => internFlag; set => internFlag = value; }
-    public string CompanyKeyword { get => companyKeyword; set => companyKeyword = value; }
-    public string JobKeyword { get => jobKeyword; set => jobKeyword = value; }
-    public string InternKeyword { get => internKeyword; set => internKeyword = value; }
-    public bool IsJob { get => isJob; set => isJob = value; }
     public string FilterClause { get => filterClause; set => filterClause = value; }
     public bool FilterFlag { get => filterFlag; set => filterFlag = value; }
     public bool DisplayAll { get => displayAll; set => displayAll = value; }
+
+    /**
+     * 
+     */
+    public void parseSearch(string search, bool isJob)
+    {
+        if (!string.IsNullOrEmpty(search))
+        {
+
+            displayAll = false;
+
+            //Keywords for query
+            string jobTitle = null;
+            string internTitle = null;
+            string companyTitle = null;
+
+
+            List<string> words = search.Split(' ').ToList<string>();
+            List<string> companies = handler.getKeywords("cname", "company");
+
+            //Determine if a company name is in the search. Can switch back to string[]
+            //TODO Only works for companies w/o space in title... 
+            foreach (string word in words)
+            {
+                string str = word.ToLower();
+                if (companies.Contains(str))
+                {
+                    if (string.Equals(companyTitle, null))
+                    {
+                        companyTitle = str;
+                        companyFlag = true;
+                    }
+                    else
+                    {
+                        companyTitle += str;
+                    }
+                }
+                companyKeyword = companyTitle;
+            }
+
+            //User wants to find a job, determine if keywords exist in jobs table.
+            if (isJob)
+            {
+                List<string> jobs = handler.getKeywords("job_title", "jobs");
+                foreach (string word in words)
+                {
+                    string str = word.ToLower();
+                    if (jobs.Contains(str))
+                    {
+                        if (string.Equals(jobTitle, null))
+                        {
+                            jobTitle = str;
+                            jobFlag = true;
+                        }
+                        else
+                        {
+                            jobTitle += " " + str;
+                        }
+                    }
+                }
+                jobKeyword = jobTitle;
+            }
+            else
+            { //internships selected, determien if keywords exist in internships table.
+                isJob = false;
+                List<string> internships = handler.getKeywords("job_title", "internships");
+                foreach (string word in words)
+                {
+                    string str = word.ToLower();
+                    if (internships.Contains(str))
+                    {
+                        if (string.Equals(internTitle, null))
+                        {
+                            internTitle = str;
+                            internFlag = true;
+                        }
+                        else
+                        {
+                            internTitle += " " + str;
+                        }
+                    }
+                }
+                internKeyword = internTitle;
+            }
+
+        }
+        else
+        {
+            //No input in textbox. Display all jobs or internships
+            displayAll = true;
+        }
+    }
 
 
     /**
