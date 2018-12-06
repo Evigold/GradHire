@@ -19,12 +19,10 @@ public partial class home : System.Web.UI.Page {
         bool isJob = typeSelector.SelectedValue == "job";
 
       
-        
-        Session["searchString"] = search;
 
         //Launch listings page
         
-        Response.Redirect("~/Listing.aspx", false);
+        Response.Redirect(String.Format("~/Listing.aspx?search={0}&isJob={1}", keyword.Text, isJob), false);
         Context.ApplicationInstance.CompleteRequest();
 
     }

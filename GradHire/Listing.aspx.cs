@@ -10,10 +10,11 @@ public partial class Listing : System.Web.UI.Page {
 
     private DBHandler handler;
     private QueryGenerator queryGenerator;
-    private DataSet ds;
+    private DataTable dataTable;
     private string query = "";
     private string filterClause = "";
     private const string noResults = "No results found";
+
 
 
     /**
@@ -22,7 +23,21 @@ public partial class Listing : System.Web.UI.Page {
     protected void Page_Load(object sender, EventArgs e) {
 
         handler = new DBHandler();
-        queryGenerator = (QueryGenerator) Session["queryGenerator"];
+
+        bool isJob = Request.QueryString["isJob"].Equals("True");
+        queryGenerator = new QueryGenerator(isJob);
+
+        //Get values from query string
+        string search = Request.QueryString["search"];
+
+        //Validate query string with values from db columns
+        queryGenerator.parseSearch(search, isJob);
+        
+        //TODODebug print search statement
+        System.Diagnostics.Debug.WriteLine(search);
+
+        //Retrieves table and populates gridview
+        getTable();
         populateGridView();
     }
 
@@ -60,41 +75,48 @@ public partial class Listing : System.Web.UI.Page {
                 queryGenerator.FilterClause = " ORDER BY salary DESC";
                 break;
         }
+        getTable();
         populateGridView();
 
     }
 
     /**
-     * Generates the query and displays in gridview
+     * Generates query and gets datatable
+     */
+    private void getTable() {
+
+        if (queryGenerator.IsJob) {
+            listingHeader.InnerHtml = "Jobs";
+        } else {
+            listingHeader.InnerHtml = "Internships";
+        }
+
+        string query = queryGenerator.generate();
+        System.Diagnostics.Debug.WriteLine(query);
+
+        if (validateQuery(query)) {
+            dataTable = handler.getDataTable(query);
+        }
+    }
+
+    /**
+     * Displays table in gridview
      */
     private void populateGridView() {
 
-        //if (queryGenerator.IsJob) {
-        //    listingHeader.InnerHtml = "Jobs";
-        //} else {
-        //    listingHeader.InnerHtml = "Internships";
-        //}
-
-        query = queryGenerator.generate();
-
-        if(validateQuery(query)) {
-            DataSet ds = handler.getDataSet(query);
-            ds = handler.getDataSet(query);
-
-            if (ds != null) {
-                if (ds.Tables[0].Rows.Count != 0) {
-                    DisplayListing.DataSource = ds;
-                    DisplayListing.DataBind();
-                } else {
-                    DisplayListing.DataSource = null;
-                    DisplayListing.DataBind();
-                }
+        if (dataTable != null) {
+            System.Diagnostics.Debug.WriteLine("datatable not null!");
+            if (dataTable.Rows.Count != 0) {
+                System.Diagnostics.Debug.WriteLine("datatable > 000!");
+                DisplayListing.DataSource = dataTable;
+                DisplayListing.DataBind();
             } else {
-                //No rows found
-                displayNoResults();
+                DisplayListing.DataSource = null;
+                DisplayListing.DataBind();
             }
         } else {
-            //no query generated
+            System.Diagnostics.Debug.WriteLine("no rows found");
+            //No rows found
             displayNoResults();
         }
     }

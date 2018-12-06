@@ -10,15 +10,14 @@ using System.Web;
 /// </summary>
 public class DBHandler {
 
-    SqlConnection connection;
-    SqlDataAdapter adapter;
+
+    const string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Scott\\source\\repos\\GradHire\\GradHire\\App_Data\\database.mdf;Integrated Security = True";
 
     /**
      * Constructor, open connection to database.mdf
      */
     public DBHandler() {
-        connection = new SqlConnection(("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Scott\\source\\repos\\GradHire\\GradHire\\App_Data\\database.mdf;Integrated Security=True"));
-        connection.Open();
+
     }
 
     /**
@@ -26,11 +25,14 @@ public class DBHandler {
      */
     public List<string> getKeywords(string col, string table) {
 
-        string query = "SELECT " + col + " FROM " + table;
-        SqlDataAdapter da = new SqlDataAdapter(query, connection);
         DataSet ds = new DataSet();
-        da.Fill(ds);
-
+        using (var conn = new SqlConnection(connectionString)) {
+            conn.Open();
+            string query = "SELECT " + col + " FROM " + table;
+            SqlDataAdapter da = new SqlDataAdapter(query, conn);
+            da.Fill(ds);
+        }
+        
         List<string> keywords = new List<string>();
         foreach (DataRow row in ds.Tables[0].Rows) {
             string str = row[col].ToString().ToLower();
@@ -44,12 +46,68 @@ public class DBHandler {
     }
 
     /**
-     * Returns a dataset from Select query
+     * Returns a datatable from Select query
      */
-    public DataSet getDataSet(string query) {
-        SqlDataAdapter da = new SqlDataAdapter(query, connection);
-        DataSet ds = new DataSet();
-        da.Fill(ds);
-        return ds;
+    public DataTable getDataTable(string query) {
+        using (var conn = new SqlConnection(connectionString)) {
+            conn.Open();
+            SqlDataAdapter da = new SqlDataAdapter(query, conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
     }
+
+    /**
+     * Run a search procedure with parameters. DEPRECATED
+     */ 
+    public DataTable runSearchProcedure(string procedure, List<KeyValuePair<string, string>> parameters) {
+      
+        using (var conn = new SqlConnection(connectionString)) {
+            conn.Open();
+
+            using (SqlCommand cmd = new SqlCommand()) {
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = procedure;
+
+                foreach (KeyValuePair<string, string> keyValuePair in parameters) {
+                    cmd.Parameters.Add(new SqlParameter(keyValuePair.Key, keyValuePair.Value));
+                }
+
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    return dt;
+                }
+            }
+        }
+   
+    }
+
+    /**
+     * Run search procedure with no parameters. DEPRECATED
+     */
+    public DataTable runSearchProcedure(string procedure) {
+
+        using (var conn = new SqlConnection(connectionString)) {
+            conn.Open();
+
+            using (SqlCommand cmd = new SqlCommand(procedure, conn)) {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    return dt;
+                }
+            }
+        }
+
+    }
+
+
+
 }
