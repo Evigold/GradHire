@@ -69,11 +69,11 @@ public partial class Listing : System.Web.UI.Page {
      */
     private void populateGridView() {
 
-        if (queryGenerator.IsJob) {
-            listingHeader.InnerHtml = "Jobs";
-        } else {
-            listingHeader.InnerHtml = "Internships";
-        }
+        //if (queryGenerator.IsJob) {
+        //    listingHeader.InnerHtml = "Jobs";
+        //} else {
+        //    listingHeader.InnerHtml = "Internships";
+        //}
 
         query = queryGenerator.generate();
 
