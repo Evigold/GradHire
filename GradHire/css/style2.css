@@ -1,18 +1,19 @@
-html {
-	font-size: 20px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: x-large;
+﻿html {
+    font-size: 11px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
     font-weight: bold;
     font-variant: normal;
     text-transform: none;
-	background-color: #EEEEEE;
+    background-color: #FFE5D4;
 }
 
 body {
-	width: 600px;
+    width: 300px;
     font-size: small;
-	margin: 0 auto;
+    margin: 0 auto;
 }
+
 h1 {
     font-size: 50px;
     text-align: center;
@@ -43,5 +44,6 @@ img {
 	w3 example*/
     margin-left: auto;
     margin-right: auto;
-    width: 38%;
+    width: 68%;
+    height: 183px;
 }
