@@ -57,7 +57,7 @@ public class DBHandler {
             return dt;
         }
     }
-
+    
     /**
      * Run a search procedure with parameters. DEPRECATED
      */ 
@@ -106,6 +106,64 @@ public class DBHandler {
             }
         }
 
+    }
+
+
+
+    public string getStats(string id, int identifier) {
+        string returnValue;
+        string query = "";
+
+        switch (identifier) {
+            case 0:
+                query = "SELECT CAST(AVG(salary) as int) FROM JOBS AS j, COMPANY AS c WHERE cid = c.id AND cid = @id";
+                break;
+            case 1:
+                query = "SELECT MIN( CONVERT(varchar(10), app_due_date, 101)) FROM JOBS AS j, COMPANY AS c WHERE cid = c.id AND cid = @id";
+                break;
+            case 2:
+                query = "SELECT COUNT(*) FROM JOBS AS j, COMPANY AS c WHERE cid = c.id AND cid = @id";
+                break;
+            case 3:
+                query = "SELECT COUNT(*) FROM INTERNSHIPS AS i, COMPANY AS c WHERE cid = c.id AND cid = @id";
+                break;
+        }
+
+        using (var conn = new SqlConnection(connectionString)) {
+            conn.Open();
+
+            using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = Convert.ToInt32(id);
+
+                string str = cmd.ExecuteScalar().ToString();
+                if (!string.IsNullOrEmpty(str)) {
+                    returnValue = str;
+                } else {
+                    returnValue = "not found";
+                }
+            }
+        }
+        return returnValue;
+    }
+
+
+    public void InsertStudent(int sid, string name, string date, int exp) {
+
+        using (var conn = new SqlConnection(connectionString)) {
+            string query = "INSERT INTO STUDENTS(school_id, student_name, grad_date, past_exp) " +
+                "VALUES(@sid, @name, @grad_date, @past_exp)";
+            conn.Open();
+
+            using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                cmd.Parameters.Add("@sid", SqlDbType.Int).Value = sid;
+                cmd.Parameters.Add("@name", SqlDbType.VarChar, 32).Value = name;
+                cmd.Parameters.Add("@grad_date", SqlDbType.Date).Value = date;
+                cmd.Parameters.Add("@past_exp", SqlDbType.Int).Value = exp;
+
+                cmd.ExecuteNonQuery();
+                
+            }
+        }
     }
 
 

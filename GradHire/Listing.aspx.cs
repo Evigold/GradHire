@@ -23,8 +23,12 @@ public partial class Listing : System.Web.UI.Page {
     protected void Page_Load(object sender, EventArgs e) {
 
         handler = new DBHandler();
+        bool isJob = false;
 
-        bool isJob = Request.QueryString["isJob"].Equals("True");
+        if (Request.QueryString["isJob"] != null) {
+            isJob = Request.QueryString["isJob"].Equals("True");
+        }
+        
         queryGenerator = new QueryGenerator(isJob);
 
         //Get values from query string
@@ -133,5 +137,8 @@ public partial class Listing : System.Web.UI.Page {
      */
     private void displayNoResults() {
         resultsHeader.InnerHtml = noResults;
+        filterDDL.Visible = false;
+        filterLabel.Visible = false;
+
     }
 }

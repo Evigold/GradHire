@@ -8,18 +8,37 @@ html {
 	background-color: #EEEEEE;
 }
 
-body {
-	width: 600px;
-    font-size: small;
-	margin: 0 auto;
+.header {
+    background-color: #FFE5D4;
+    text-align: center;
+    padding: 20px;
 }
+
+.input {
+    margin: auto;
+    width: 300px;
+    padding:10px;
+}
+
+.nav {
+    display:inline-block;
+    direction: ltr;
+}
+.image {
+    display:inline-block;
+}
+
+.display {
+    text-align:center;
+    font-size: small;
+}
+
 h1 {
-    font-size: 50px;
+    font-size: 36px;
     text-align: center;
     margin: 0;
-    padding: 20px 0;
-    color: #FFFFFF;
-    text-shadow: 3px 3px 1px black;
+    padding: 20px;
+    color: #7AA5D2;
 }
 
 h2 {
@@ -28,7 +47,6 @@ h2 {
     margin: 0;
     padding: 20px 0;
     color: #FFFFFF;
-    text-shadow: 2px 2px 1px black;
 }
 
 p, ol, li {
@@ -43,5 +61,18 @@ img {
 	w3 example*/
     margin-left: auto;
     margin-right: auto;
-    width: 38%;
+    width: 32%;
+}
+
+.parent {
+    padding: 1rem
+}
+
+.child {
+    display: inline-block;
+    text-align: left;
+}
+
+.inline-flex-parent {
+    display: inline-flex;
 }

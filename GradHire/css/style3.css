@@ -1,0 +1,96 @@
+﻿html {
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    font-variant: normal;
+    text-transform: none;
+    background-color: #FFE5D4;
+}
+
+.header {
+    background-color: #FFE5D4;
+    text-align: center;
+    padding: 20px;
+}
+
+.input {
+    margin: auto;
+    width: 300px;
+    padding: 10px;
+}
+
+.nav {
+    display: inline-block;
+    direction: ltr;
+}
+
+.image {
+    display: inline-block;
+}
+
+.display {
+    text-align: center;
+}
+
+body {
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    color: #7AA5D2;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 32%;
+}
+
+.parent {
+    padding: 1rem;
+    display: flex;
+
+}
+
+.child {
+    display: inline-block;
+    text-align: left;
+}
+
+h2 {
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    padding: 20px 0;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 1px black;
+}
+
+p, ol, li {
+    font-size: 16px;
+    line-height: 2;
+    letter-spacing: 1px;
+}
+
+.inputBox {
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.outer {
+    padding: 30px;
+    text-align: center;
+}
+
+.inner {
+    display: inline-block;
+    padding: 50px;
+}
